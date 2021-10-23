@@ -1,7 +1,8 @@
 import socket
 import hashlib
 import hmac
-HOST = "127.0.0.1"
+import threading
+HOST = "0.0.0.0" #CON ESTA IP PODEMOS ACCEDER DESDE LA RED LOCAL Y DESDE EL EQUIPO
 PORT = 65432
 LONGITUD = 1024
 FORMATO = "utf-8"
@@ -11,11 +12,10 @@ CLAVE_CLIENTE = "clave_a_definir"
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
 
-#PROTOCOLO DE ENVIO DE DATOS AL SERVIDOR, PRIMERO SE INDICA EL NUMERO DE BYTES Y LUEGO SE MANDA EL MENSAJE COMO TAL
-
 
 #ARRANCAMOS EL SERVIDOR Y ACEPTAMOS LAS CONEXIONES ENTRANTES, SOLO UN CLIENTE SIMULTANEAMENTE
 def arrancar_servidor():
+    print(HOST)
     server.listen()
     while True:
         conn, direccion = server.accept()

@@ -1,20 +1,18 @@
-import socket, json
+import socket
+import hashlib
+import hmac
 HOST = "127.0.0.1"
 PORT = 65432
-CABECERA = 128
+LONGITUD = 1024
 FORMATO = "utf-8"
 CERRAR_CONEXION = "close_connection"
 FALLO_VERIFICACION = "123"
+CLAVE_CLIENTE = "clave_a_definir"
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
 
 #PROTOCOLO DE ENVIO DE DATOS AL SERVIDOR, PRIMERO SE INDICA EL NUMERO DE BYTES Y LUEGO SE MANDA EL MENSAJE COMO TAL
-def enviarMensaje(mensaje, cliente):
-    bytesMensaje = mensaje.encode(FORMATO)
-    datos_cabecera = str(len(bytesMensaje)).encode(FORMATO)
-    datos_cabecera += b' ' * (CABECERA - len(datos_cabecera))
-    cliente.send(datos_cabecera)
-    cliente.send(bytesMensaje)
+
 
 #ARRANCAMOS EL SERVIDOR Y ACEPTAMOS LAS CONEXIONES ENTRANTES, SOLO UN CLIENTE SIMULTANEAMENTE
 def arrancar_servidor():
@@ -29,27 +27,23 @@ def arrancar_servidor():
 #LOGICA DEL SERVIDOR
 def manejar_cliente(conn, direccion):
     print("Nueva conexion con: " + str(direccion))
-    while True:
-        print("ESPERANDO RECIBIR MENSAJE")
-        mensaje_recibido = conn.recv(CABECERA) 
-        if mensaje_recibido:
-            print(mensaje_recibido.decode(FORMATO))
-            datos = conn.recv(int(mensaje_recibido.decode(FORMATO))).decode(FORMATO)
-            if datos == "1":
-                #TODO MANEJAR FUNCION DEL CLIENTE
-                pass
-            elif datos == "2":
-                #TODO MANEJAR FUNCION DEL CLIENTE
-                pass
-            elif datos == "3":
-                #TODO MANEJAR FUNCION DEL CLIENTE
-                pass
-                
-            elif datos == CERRAR_CONEXION:
-                break
+    algoritmo = conn.recv(LONGITUD).decode(FORMATO)
+    print(algoritmo)
+    if algoritmo not in hashlib.algorithms_guaranteed:
+        conn.sendall(b"EL ALGORITMO ESCOGIDO NO ES CORRECTO, ABORTANDO CONEXION")
+        conn.close()
+        return
+    conn.sendall(b"ALGORITMO ADECUADO, PROCEDIENDO A VALIDAR LA TRANSACCION")
+    mensaje, macMensaje = conn.recv(LONGITUD).decode(FORMATO).rsplit(' ', 1)
     
+    macMensajeCalculado = hmac.new(key = CLAVE_CLIENTE.encode(FORMATO), msg = mensaje.encode(FORMATO), digestmod = algoritmo)
+
+    if macMensajeCalculado.hexdigest() == macMensaje:
+        print("OPERACION CORRECTA")
+        conn.sendall(b"LA OPERACION SE HA REALIZADO CORRECTAMENTE")
+    else:
+        print(b"LA OPERACION NO SE HA PODIDO REALIZAR YA QUE EL MENSAJE HA SIDO MODIFICADO")
+    #TODO COMPROBAR SI EL NONCE YA HA SIDO USADO ANTES
     conn.close()
-
-
 
 arrancar_servidor()

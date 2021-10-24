@@ -1,0 +1,20 @@
+la transaccion 0 se realizo correctamente 
+la transaccion 1 se realizo correctamente 
+la transaccion 2 se realizo correctamente 
+la transaccion 3 se realizo correctamente 
+la transaccion 4 se realizo correctamente 
+la transaccion 5 se realizo correctamente 
+la transaccion 6 se realizo correctamente 
+la transaccion 7 se realizo correctamente 
+la transaccion 8 se realizo correctamente 
+la transaccion 9 se realizo correctamente 
+Hubo un error en la transaccion 0
+Hubo un error en la transaccion 1
+Hubo un error en la transaccion 2
+Hubo un error en la transaccion 3
+Hubo un error en la transaccion 4
+Hubo un error en la transaccion 5
+Hubo un error en la transaccion 6
+Hubo un error en la transaccion 7
+Hubo un error en la transaccion 8
+Hubo un error en la transaccion 9

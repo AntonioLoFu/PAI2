@@ -2,8 +2,10 @@ import socket
 import hashlib
 import hmac
 import threading
+from log import *
+
 HOST = "0.0.0.0" #CON ESTA IP PODEMOS ACCEDER DESDE LA RED LOCAL Y DESDE EL EQUIPO
-PORT = 65432
+PORT = 10000
 LONGITUD = 1024
 FORMATO = "utf-8"
 CERRAR_CONEXION = "close_connection"
@@ -40,9 +42,12 @@ def manejar_cliente(conn, direccion):
 
     if macMensajeCalculado.hexdigest() == macMensaje:
         print("OPERACION CORRECTA")
+        creaLog(mensaje, True)
         conn.sendall(b"LA OPERACION SE HA REALIZADO CORRECTAMENTE")
     else:
         print(b"LA OPERACION NO SE HA PODIDO REALIZAR YA QUE EL MENSAJE HA SIDO MODIFICADO")
+        creaLog(mensaje, False)
+
     #TODO COMPROBAR SI EL NONCE YA HA SIDO USADO ANTES
     conn.close()
 

@@ -6,7 +6,7 @@ HOST = '127.0.0.1'
 FORMATO = "utf-8"
 LONGITUD = 1024
 CERRAR_CONEXION = "close_connection"
-PORT = 65432
+PORT = 10000
 FALLO_VERIFICACION = "123"
 CLAVE_CLIENTE = "clave_a_definir"
 

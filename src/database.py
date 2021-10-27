@@ -10,9 +10,6 @@ def crearTabla():
     conexion = sql.connect("nonces.db")
     cursor = conexion.cursor()
     cursor.execute("""CREATE TABLE nonces (
-                    user text,
-                    password text,
-                    clave text,
                     nonce text
                     )""")
     conexion.commit()

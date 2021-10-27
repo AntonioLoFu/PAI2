@@ -1,7 +1,6 @@
 import socket
 import hashlib
 import hmac
-import threading
 from log import *
 
 HOST = "0.0.0.0" #CON ESTA IP PODEMOS ACCEDER DESDE LA RED LOCAL Y DESDE EL EQUIPO
@@ -17,7 +16,6 @@ server.bind((HOST, PORT))
 
 #ARRANCAMOS EL SERVIDOR Y ACEPTAMOS LAS CONEXIONES ENTRANTES, SOLO UN CLIENTE SIMULTANEAMENTE
 def arrancar_servidor():
-    print(HOST)
     server.listen()
     while True:
         conn, direccion = server.accept()

@@ -9,7 +9,7 @@ def crearDB():
 def crearTabla():
     conexion = sql.connect("nonces.db")
     cursor = conexion.cursor()
-    cursor.execute("""CREATE TABLE nonces (
+    cursor.execute("""CREATE TABLE IF NOT EXISTS nonces (
                     nonce text
                     )""")
     conexion.commit()
@@ -23,9 +23,11 @@ def insertarNonce(nonce):
     conexion.commit()
     conexion.close()
 
-#crearDB()
-#crearTabla()
-#insertarUser('Antonio Parra','3k2r','apd',2723443)
-#insertarUser('Juan Alberto','59405','j2000X',490033)
-#insertarUser('Antonio Lopez','eifki240','alpALP10',9409554)
-#updateUser('Juan Alberto',10)
+def nonceExistente(nonce):
+    conexion = sql.connect("nonces.db")
+    cursor = conexion.cursor()
+    ins = f"SELECT * FROM nonces where nonces.nonce = '{nonce}'"
+    cursor.execute(ins)
+    
+    return bool(cursor.fetchone())
+    conexion.close()

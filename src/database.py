@@ -15,25 +15,17 @@ def crearTabla():
     conexion.commit()
     conexion.close()
 
-def insertarUser(user,password,clave,nonce):
+def insertarNonce(nonce):
     conexion = sql.connect("nonces.db")
     cursor = conexion.cursor()
-    ins = f"INSERT INTO nonces VALUES ('{user}','{password}','{clave}','{nonce}')"
-    cursor.execute(ins)
-    conexion.commit()
-    conexion.close()
-
-def updateClave(user,nuevoClave):
-    conexion = sql.connect("nonces.db")
-    cursor = conexion.cursor()
-    ins = f"UPDATE nonces SET clave={nuevoClave} WHERE user like '{user}'"
+    ins = f"INSERT INTO nonces VALUES ('{nonce}')"
     cursor.execute(ins)
     conexion.commit()
     conexion.close()
 
 #crearDB()
 #crearTabla()
-insertarUser('Antonio Parra','3k2r','apd',2723443)
-insertarUser('Juan Alberto','59405','j2000X',490033)
-insertarUser('Antonio Lopez','eifki240','alpALP10',9409554)
+#insertarUser('Antonio Parra','3k2r','apd',2723443)
+#insertarUser('Juan Alberto','59405','j2000X',490033)
+#insertarUser('Antonio Lopez','eifki240','alpALP10',9409554)
 #updateUser('Juan Alberto',10)

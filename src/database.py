@@ -11,30 +11,32 @@ def crearTabla():
     cursor = conexion.cursor()
     cursor.execute("""CREATE TABLE nonces (
                     user text,
-                    nonce integer
+                    password text,
+                    clave text,
+                    nonce text
                     )""")
     conexion.commit()
     conexion.close()
 
-def insertarUser(user,nonce):
+def insertarUser(user,password,clave,nonce):
     conexion = sql.connect("nonces.db")
     cursor = conexion.cursor()
-    ins = f"INSERT INTO nonces VALUES ('{user}',{nonce})"
+    ins = f"INSERT INTO nonces VALUES ('{user}','{password}','{clave}','{nonce}')"
     cursor.execute(ins)
     conexion.commit()
     conexion.close()
 
-def updateUser(user,nuevoNonce):
+def updateClave(user,nuevoClave):
     conexion = sql.connect("nonces.db")
     cursor = conexion.cursor()
-    ins = f"UPDATE nonces SET nonce={nuevoNonce} WHERE user like '{user}'"
+    ins = f"UPDATE nonces SET clave={nuevoClave} WHERE user like '{user}'"
     cursor.execute(ins)
     conexion.commit()
     conexion.close()
 
 #crearDB()
 #crearTabla()
-#insertarUser('Antonio Parra',2723443)
-#insertarUser('Juan Alberto',490033)
-#insertarUser('Antonio Lopez',9409554)
+insertarUser('Antonio Parra','3k2r','apd',2723443)
+insertarUser('Juan Alberto','59405','j2000X',490033)
+insertarUser('Antonio Lopez','eifki240','alpALP10',9409554)
 #updateUser('Juan Alberto',10)

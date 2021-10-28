@@ -39,7 +39,7 @@ def getDatosUsuario():
         if algoritmo in ALGORITMOS_POSIBLES:
             break
         print("INTRODUZCA UN ALGORITMO CORRECTO:")
-        algoritmo = input("INTRODUZCA EL ALGORITMO A USAR: {}\n".format(hashlib.algorithms_guaranteed))
+        algoritmo = input("INTRODUZCA EL ALGORITMO A USAR: {}\n".format(ALGORITMOS_POSIBLES))
 
 
         

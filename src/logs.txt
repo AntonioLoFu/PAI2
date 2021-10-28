@@ -4,3 +4,31 @@ la transaccion 5 5 5 8140becf430b0951678d9d28a7b005d453de961a26727d878f53d8cd719
 la transaccion 555 se realizo correctamente 
 La transaccion : 69 69 69 se realizo correctamente 
 La transaccion : 1 2 3 se realizo correctamente 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 2 2 2 
+Hubo un error con la transaccion : 2 2 2 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+La transaccion : 1 1 1 se realizo correctamente 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 1 1 1 
+Hubo un error con la transaccion : 2 2 2 
+Hubo un error con la transaccion : 2 2 2 
+Hubo un error con la transaccion : 2 2 2 
+Hubo un error con la transaccion : 2 2 2 
+Hubo un error con la transaccion : 2 2 2 
+La transaccion : 2 2 2 se realizo correctamente 
+La transaccion : 3 3 3 se realizo correctamente 
+La transaccion : 5 5 5 se realizo correctamente 
+La transaccion : 12791827 123 123 se realizo correctamente 

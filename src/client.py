@@ -1,6 +1,8 @@
 import socket
 import hmac, hashlib
 import secrets
+from diffieTools import *
+from diffieHellman import * 
 
 HOST = '127.0.0.1'
 FORMATO = "utf-8"
@@ -51,24 +53,49 @@ def getDatosUsuario():
         
     mensaje = " ".join([cuenta_origen, cuenta_destino, cantidad])
     return (mensaje, algoritmo)
+
 def __main__():
         
     while True:
-        datos = getDatosUsuario()
-        mensaje = " ".join([datos[0], secrets.token_hex()])
-        hmacMensaje = hmac.new(key = CLAVE_CLIENTE.encode(FORMATO), msg = mensaje.encode(FORMATO), digestmod = datos[1])
-        mensaje = " ".join([mensaje, hmacMensaje.hexdigest()])
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.connect((HOST, PORT))
-            #ENVIAMOS EL ALGORITMO A USAR PARA CALCULAR EL MAC DEL MENSAJE
-            s.sendall(datos[1].encode(FORMATO))
-            #RECIBIMOS LA RESPUESTA DE VERIFICACION DEL ALGORITMO
-            print(s.recv(1024).decode(FORMATO))
-            #ENVIAMOS EL MENSAJE CON EL NONCE Y EL MAC
-            s.sendall(mensaje.encode(FORMATO))
 
-            respuestaServidor = s.recv(1024).decode(FORMATO)
-            print(respuestaServidor)
+            datos = getDatosUsuario()
+            mensaje = " ".join([datos[0], secrets.token_hex()])
+            
+
+            #GENERAMOS LA CLAVVE PÚBLICA Y PRIVADA DEL CLIENTE
+            clientPublicKey = generaPrimoAleatorio(1, 100)
+            clientPrivateKey = generaPrimoAleatorio(1, 100)
+            print("Clave privada del cliente" + str(clientPrivateKey))
+            print("Clave publica del cliente" + str(clientPublicKey))
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                s.connect((HOST, PORT))
+                #ENVIAMOS LA CLAVE PÚBLICA DEL CLIENTE
+                s.sendall(str(clientPublicKey).encode(FORMATO))
+                #RECIBIMOS LA CLAVE PÚBLICA DEL SERVER
+                serverPublicKey = s.recv(LONGITUD).decode(FORMATO)
+                
+                diffie = DH(publica1 =  int(serverPublicKey), publica2 =clientPublicKey, privada = clientPrivateKey)
+                
+                print("Clave parcial del cliente" + str(diffie.calculaParcial()))
+                s.sendall(str(diffie.calculaParcial()).encode(FORMATO))
+                serverParcial = s.recv(LONGITUD).decode(FORMATO)
+                print("Clave parcial del servidor recibida por el cliente" + serverParcial)
+                claveFinalCliente = str(diffie.calculaFinal(parcial = int(serverParcial))).encode(FORMATO)
+                print(claveFinalCliente)
+                hmacMensaje = hmac.new(key = claveFinalCliente, 
+                                msg = mensaje.encode(FORMATO), 
+                                digestmod = datos[1])
+
+                mensaje = " ".join([mensaje, hmacMensaje.hexdigest()])
+                #ENVIAMOS EL ALGORITMO A USAR PARA CALCULAR EL MAC DEL MENSAJE
+                s.sendall(datos[1].encode(FORMATO))
+                #RECIBIMOS LA RESPUESTA DE VERIFICACION DEL ALGORITMO
+                print(s.recv(1024).decode(FORMATO))
+                #ENVIAMOS EL MENSAJE CON EL NONCE Y EL MAC
+                s.sendall(mensaje.encode(FORMATO))
+
+                respuestaServidor = s.recv(1024).decode(FORMATO)
+                print(respuestaServidor)
 
 
     

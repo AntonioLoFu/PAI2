@@ -1,3 +1,5 @@
+#LEE EL ARCHIVO LOGS Y CALCULA EL KPI TRANSACCIONES BUENAS/ TRANSACCIONES TOTALES 
+
 def KPI():
     transacciones, transaccionesSatisfactorias = 0, 0
 

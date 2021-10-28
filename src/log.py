@@ -1,3 +1,5 @@
+#FUNCION QUE ESCRIBE ENE EL ARCHIVO LOGS CUANDO SE REALIZA UNA TRANSACCION 
+
 def creaLog(transaccion, validez):
     f = open("logs.txt", "a")
     listaTransaccion =  transaccion.split() # [Cuenta origen, Cuenta destino, Cantidad, Mac]

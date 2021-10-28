@@ -1,5 +1,7 @@
 import random 
 
+#FUNCION PARA GENERAR PRIMOS ALEATORIOS 
+
 def generaPrimoAleatorio(min, max):
         primes = [i for i in range(min,max) if is_prime(i)]
         n = random.choice(primes)
